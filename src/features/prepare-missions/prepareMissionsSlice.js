@@ -11,6 +11,9 @@ export const prepareMissionsSlice = createSlice({
         addMission: (state, action) => {
             state.push(action.payload);
         }
+        // removeMission: (state, action) => {
+        //     return state.filter(eachMission => eachMission.id !== action.payload);
+        // }
     }
 });
 

@@ -1,10 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMission, setMissionTitle,
-  setMissionAgency, setMissionType, setMissionFlight 
+import { selectMission, setMissionTitle, setMissionAgency, setMissionType, setMissionFlight, resetMissonInfo 
 } from './createMissionSlice';
 import { addMission } from '../prepare-missions/prepareMissionsSlice';
-// import { SPACE_EXPLORATION_TYPES, SPACE_FLIGHT_TYPE } from './createMissionApi';
+import { SPACE_EXPLORATION_TYPES, SPACE_FLIGHT_TYPE } from './createMissionApi';
 
 export function CreateMission() {
   const mission = useSelector(selectMission);
@@ -20,6 +19,7 @@ export function CreateMission() {
  const handleSubmit = event => {
     event.preventDefault();
     dispatch(addMission({title, agency, type, flight}));
+    dispatch(resetMissonInfo());
   };
 
   return (
@@ -60,27 +60,32 @@ export function CreateMission() {
               <label htmlFor="agency">Space Agency</label>
             </div>
             <div className={'form-floating mb-3'}>
-              <input
+              <select 
                 id="type"
                 name="explorationType"
-                className={'form-control'}
-                aria-label="Set mission exploration type"
-                placeholder="Mission Type"
                 value={type}
+                aria-label="Set mission exploration type"
                 onChange={e => dispatch(setMissionType(e.target.value))}
-              />
+                className={'form-select'}
+              >
+                <option value="none" selected hidden> Select exploration type </option>
+                {SPACE_EXPLORATION_TYPES.map((eachFlight) => <option value={eachFlight} >{eachFlight}</option>)}
+              </select>
+
               <label htmlFor="type">Mission Type</label>
             </div>
             <div className={'form-floating mb-3'}>
-               <input
+              <select 
                 id="flight"
                 name="flightType"
-                className={'form-control'}
                 aria-label="Set mission flight type"
-                placeholder="Flight Type"
-                value={flight}
+                value={flight} 
                 onChange={e => dispatch(setMissionFlight(e.target.value))}
-              />
+                className={'form-select'}
+              >
+                <option value="none" selected hidden> Select flight type </option>
+                {SPACE_FLIGHT_TYPE.map((eachFlight) => <option value={eachFlight} >{eachFlight}</option>)}
+              </select>
               <label htmlFor="flight">Flight Type</label>
             </div>
             <button className={'w-100 btn btn-lg btn-primary'} type="submit">Create</button>

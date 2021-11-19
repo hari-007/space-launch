@@ -24,11 +24,14 @@ export const createMissionSlice = createSlice({
         },
         setMissionFlight: (state, action) => {
             return { ...state, flight: action.payload }
+        },
+        resetMissonInfo: (state, action) => {
+            return initialState;
         }
     }
 });
 
-export const { setMissionTitle, setMissionAgency,
+export const { setMissionTitle, setMissionAgency, resetMissonInfo,
     setMissionType, setMissionFlight } = createMissionSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
