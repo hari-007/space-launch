@@ -1,6 +1,7 @@
 import React from 'react';
 import { CreateMission } from '../features/create-mission/CreateMission';
-import { PrepareMissions } from '../features/prepare-missions/PrepareMissions';
+import { PrepareMissionsList } from '../features/prepare-missions/PrepareMissionList';
+import { LaunchMissionsList } from '../features/launch/LaunchMissionList';
 import './App.css';
 
 function App() {
@@ -8,9 +9,10 @@ function App() {
     <main>
       <div> <CreateMission /> </div>
 
-      <div className={'section-divider'}></div>
+      {/* <div className={'section-divider'}></div> */}
       
-      <div> <PrepareMissions /> </div>
+      <div> <PrepareMissionsList /> </div>
+      <div> <LaunchMissionsList /> </div>
     </main>
   );
 }

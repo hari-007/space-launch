@@ -9,7 +9,10 @@ export const prepareMissionsSlice = createSlice({
         // Use the PayloadAction type to declare the contents of `action.payload`
         // from the dispatch of createMission event
         addMission: (state, action) => {
-            state.push(action.payload);
+            state.push({ 
+                id: Date.now(), // Adds unique Id to every mission 
+                ...action.payload
+            });
         }
         // removeMission: (state, action) => {
         //     return state.filter(eachMission => eachMission.id !== action.payload);
@@ -18,5 +21,7 @@ export const prepareMissionsSlice = createSlice({
 });
 
 export const { addMission } = prepareMissionsSlice.actions;
+
+export const fetchPreparedMissionList = (state) => state.prepareMissions;
 
 export default prepareMissionsSlice.reducer;

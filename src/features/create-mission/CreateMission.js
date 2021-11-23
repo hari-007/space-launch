@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMission, setMissionTitle, setMissionAgency, setMissionType, setMissionFlight, resetMissonInfo 
+import { selectMission, setMissionTitle, setMissionAgency, 
+  setMissionType, setMissionFlight, resetMissonInfo 
 } from './createMissionSlice';
 import { addMission } from '../prepare-missions/prepareMissionsSlice';
 import { SPACE_EXPLORATION_TYPES, SPACE_FLIGHT_TYPE } from './createMissionApi';
