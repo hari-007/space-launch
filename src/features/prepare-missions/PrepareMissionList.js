@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { fetchPreparedMissionList } from './prepareMissionsSlice';
 import PrepareMission from './PrepareMission';
-// import { SPACE_EXPLORATION_TYPES, SPACE_FLIGHT_TYPE } from './createMissionApi';
 
 export function PrepareMissionsList() {
 
@@ -16,7 +15,7 @@ export function PrepareMissionsList() {
       <div className="mx-auto" key={eachMission.id.toString()}>
         <PrepareMission id={eachMission.id}
           title={eachMission.title}
-          agency={eachMission.agency}
+          agencies={eachMission.agencies}
           type={eachMission.type}
           flight={eachMission.flight}
         />
@@ -26,7 +25,6 @@ export function PrepareMissionsList() {
     preparedMissionsListComponents =  
       <div className="col-12">
         <h2 className="text-warning">No planned missions available for prepare!!</h2>
-       
       </div>
   }
   

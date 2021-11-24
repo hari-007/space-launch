@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     title: '',
-    agency: '',
+    agencies: '',
     type: '',
     flight: ''
 };
@@ -16,8 +16,8 @@ export const createMissionSlice = createSlice({
         setMissionTitle: (state, action) => {
             return { ...state, title: action.payload }
         },
-        setMissionAgency: (state, action) => {
-            return { ...state, agency: action.payload }
+        setMissionAgencies: (state, action) => {
+            return { ...state, agencies: action.payload }
         },
         setMissionType: (state, action) => {
             return { ...state, type: action.payload }
@@ -27,12 +27,15 @@ export const createMissionSlice = createSlice({
         },
         resetMissonInfo: (state, action) => {
             return initialState;
+        },
+        editMission: (state, action) => {
+            return {...action.payload}
         }
     }
 });
 
-export const { setMissionTitle, setMissionAgency, resetMissonInfo,
-    setMissionType, setMissionFlight } = createMissionSlice.actions;
+export const { setMissionTitle, setMissionAgencies, setMissionType, setMissionFlight, 
+    resetMissonInfo, editMission } = createMissionSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

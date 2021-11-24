@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMission, setMissionTitle, setMissionAgency, 
+import { selectMission, setMissionTitle, setMissionAgencies, 
   setMissionType, setMissionFlight, resetMissonInfo 
 } from './createMissionSlice';
-import { addMission } from '../prepare-missions/prepareMissionsSlice';
+import { addMissionToPrep } from '../prepare-missions/prepareMissionsSlice';
 import { SPACE_EXPLORATION_TYPES, SPACE_FLIGHT_TYPE } from './createMissionApi';
 
 export function CreateMission() {
@@ -12,14 +12,16 @@ export function CreateMission() {
   const dispatch = useDispatch();
 
   // Here creates a local state props with store mission object properties
+  const id = mission.id;
   const title = mission.title;
-  const agency = mission.agency;
+  const agencies = mission.agencies;
   const type = mission.type;
   const flight = mission.flight;
 
- const handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    dispatch(addMission({title, agency, type, flight}));
+    const missionId = id || Date.now(); // Adds unique Id to every mission 
+    dispatch(addMissionToPrep({id: missionId, title, agencies, type, flight}));
     dispatch(resetMissonInfo());
   };
 
@@ -50,15 +52,15 @@ export function CreateMission() {
             </div>
             <div className={'form-floating mb-3'}>
               <input 
-                id="agency"
-                name="spaceAgency"
+                id="agencies"
+                name="spaceAgencies"
                 className={'form-control'}
-                aria-label="Set mission agency"
-                placeholder="Space Agency"
-                value={agency}
-                onChange={e => dispatch(setMissionAgency(e.target.value))}
+                aria-label="Set mission agencies"
+                placeholder="Space Agencies"
+                value={agencies}
+                onChange={e => dispatch(setMissionAgencies(e.target.value))}
               />
-              <label htmlFor="agency">Space Agency</label>
+              <label htmlFor="agencies">Space Agencies</label>
             </div>
             <div className={'form-floating mb-3'}>
               <select 
@@ -69,8 +71,15 @@ export function CreateMission() {
                 onChange={e => dispatch(setMissionType(e.target.value))}
                 className={'form-select'}
               >
-                <option value="none" selected hidden> Select exploration type </option>
-                {SPACE_EXPLORATION_TYPES.map((eachFlight) => <option value={eachFlight} >{eachFlight}</option>)}
+                <option value="none" defaultValue hidden> Select exploration type </option>
+                {SPACE_EXPLORATION_TYPES.map((eachExploraiton) => 
+                  <option 
+                    key={eachExploraiton}
+                    value={eachExploraiton}
+                  >
+                    {eachExploraiton}
+                  </option>
+                )}
               </select>
 
               <label htmlFor="type">Mission Type</label>
@@ -84,12 +93,24 @@ export function CreateMission() {
                 onChange={e => dispatch(setMissionFlight(e.target.value))}
                 className={'form-select'}
               >
-                <option value="none" selected hidden> Select flight type </option>
-                {SPACE_FLIGHT_TYPE.map((eachFlight) => <option value={eachFlight} >{eachFlight}</option>)}
+                <option value="none" defaultValue hidden> Select flight type </option>
+                {SPACE_FLIGHT_TYPE.map((eachFlight) => 
+                  <option 
+                    key={eachFlight}
+                    value={eachFlight} 
+                  >
+                    {eachFlight}
+                  </option>
+                )}
               </select>
               <label htmlFor="flight">Flight Type</label>
             </div>
-            <button className={'w-100 btn btn-lg btn-primary'} type="submit">Create</button>
+            <button 
+              type="submit"
+              className={id != null ? 'w-100 btn btn-lg btn-secondary' : 'w-100 btn btn-lg btn-primary'}
+            >
+              {id != null ? 'Update' : 'Create'}
+            </button>
             <hr className={'my-4'} />
             <small className={'text-muted'}>By clicking Create, you are starting mission preparation below.</small>
           </form>

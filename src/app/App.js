@@ -1,7 +1,7 @@
 import React from 'react';
 import { CreateMission } from '../features/create-mission/CreateMission';
 import { PrepareMissionsList } from '../features/prepare-missions/PrepareMissionList';
-import { LaunchMissionsList } from '../features/launch/LaunchMissionList';
+import { LaunchMissionList } from '../features/launch-missions/LaunchMissionList';
 import './App.css';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       {/* <div className={'section-divider'}></div> */}
       
       <div> <PrepareMissionsList /> </div>
-      <div> <LaunchMissionsList /> </div>
+      <div> <LaunchMissionList /> </div>
     </main>
   );
 }
