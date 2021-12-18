@@ -20,6 +20,7 @@ export function LaunchMissionList() {
           flight={eachMission.flight}
           prepTime={eachMission.prepTime}
           launchSchedule={eachMission.launchSchedule}
+          travelTime={eachMission.travelTime}
         />
       </div>
     );
@@ -37,7 +38,7 @@ export function LaunchMissionList() {
         <div className="py-5">
           <h1 className="display-5 fw-bold lh-1 text-dark">Launch Missions</h1>
           <div className="col-lg-11 mx-auto">
-            <p className="fs-5 mb-4">All the prepared and ready to be launched missions will appear here.</p>
+            <p className="fs-5 mb-4">All the prepared and launching missions will appear here.</p>
             <div className="d-grid gap-2 d-lg-flex gy-3 overflow-scroll">
               {launchMissionListComponents}
             </div>

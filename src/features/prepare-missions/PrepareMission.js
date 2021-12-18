@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { MISSION_PREP_TIMES, MISSION_LAUNCH_TIMES } from './prepareMissionApi';
+import { MISSION_PREP_TIMES, MISSION_LAUNCH_OR_TRAVEL_TIMES } from './prepareMissionApi';
 import { removePrepMission } from './prepareMissionsSlice';
 import { editMission } from '../create-mission/createMissionSlice';
 import { scheduleMission } from '../launch-missions/launchMissionSlice';
@@ -11,6 +11,7 @@ const PrepareMission = ({id, title, agencies, type, flight}) => {
   // Declare a new local component level state variable for preperation & launch time
   const [prepTime, setPrepTime] = useState('');
   const [launchSchedule, setLaunchSchedule] = useState('');
+  const [travelTime, setTravelTime] = useState('');
   
   console.log('Render -- PrepareMission - ' + title);
 
@@ -22,7 +23,7 @@ const PrepareMission = ({id, title, agencies, type, flight}) => {
 
   const handlePrepMissionSubmit = event => {
     event.preventDefault();
-    dispatch(scheduleMission({id, title, agencies, type, flight, prepTime, launchSchedule}));
+    dispatch(scheduleMission({id, title, agencies, type, flight, prepTime, launchSchedule, travelTime}));
     dispatch(removePrepMission(id));
   }
 
@@ -80,11 +81,11 @@ const PrepareMission = ({id, title, agencies, type, flight}) => {
                 name="launchTime"
                 aria-label="provide mission launch time"
                 value={launchSchedule} 
-                onChange={e => setLaunchSchedule(e.target.value)}
+                onChange={e => setLaunchSchedule(parseInt(e.target.value))}
                 className={'form-select'}
               >
                 <option value="none" defaultValue hidden> Provide launch initiation time </option>
-                {MISSION_LAUNCH_TIMES.map((eachLaunchTime) => 
+                {MISSION_LAUNCH_OR_TRAVEL_TIMES.map((eachLaunchTime) => 
                   <option 
                     key={eachLaunchTime.seconds.toString()} 
                     value={eachLaunchTime.seconds} 
@@ -94,6 +95,29 @@ const PrepareMission = ({id, title, agencies, type, flight}) => {
                 )}
               </select>
               <label htmlFor="launchTime">Launch schedule</label>
+            </div>
+          </li>
+          <li className="list-group-item text-start">
+            <div className={'form-floating sm-3'}>
+              <select 
+                id="travel"
+                name="travelTime"
+                aria-label="provide mission travel time"
+                value={travelTime} 
+                onChange={e => setTravelTime(parseInt(e.target.value))}
+                className={'form-select'}
+              >
+                <option value="none" defaultValue hidden> Provide travel completion time </option>
+                {MISSION_LAUNCH_OR_TRAVEL_TIMES.map((eachTravelTime) => 
+                  <option 
+                    key={eachTravelTime.seconds.toString()} 
+                    value={eachTravelTime.seconds} 
+                  >
+                    {eachTravelTime.time}
+                  </option>
+                )}
+              </select>
+              <label htmlFor="travelTime">Travel time</label>
             </div>
           </li>
         </ul>

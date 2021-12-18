@@ -5,8 +5,6 @@ import PrepareMission from './PrepareMission';
 
 export function PrepareMissionsList() {
 
-  console.log('Render -- PrepareMissionList');
-
   const preparedMissionsListData = useSelector(fetchPreparedMissionList);
   let preparedMissionsListComponents;
 

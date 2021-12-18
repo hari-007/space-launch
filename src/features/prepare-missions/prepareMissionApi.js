@@ -15,7 +15,7 @@ export const MISSION_PREP_TIMES = [
   '1 Year'
 ];
 
-export const MISSION_LAUNCH_TIMES = [
+export const MISSION_LAUNCH_OR_TRAVEL_TIMES = [
   { time: '10 Seconds', seconds: 10 },
   { time: '20 Seconds', seconds: 20 },
   { time: '30 Seconds', seconds: 30 },

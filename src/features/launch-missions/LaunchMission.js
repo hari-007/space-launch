@@ -1,25 +1,56 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addMissionToPrep } from '../prepare-missions/prepareMissionsSlice';
+import { addMissionToHistory } from '../missions-history/MissionHistorySlice';
+import { removeLaunchMission } from '../launch-missions/launchMissionSlice';
 
-const LaunchTimmer = ({launchSchedule}) => {
-  const [launchTimer, setLaunchTimer] = useState(launchSchedule);
+const LaunchMission = ({id, title, agencies, type, flight, prepTime, launchSchedule, travelTime}) => {
+  
+  const dispatch = useDispatch();
+  const [launchTimer, setLaunchTimer] = useState(launchSchedule || 0);
+  const [travelTimer, setTravelTimer] = useState('Launching ....');
 
   useEffect(() => {
-    const launchInterval = setInterval(() => setLaunchTimer(launchTimer - 1), 1000);
+    const launchAndTravelInterval = setInterval(() => {
+      if (launchTimer > 0) {
+        setLaunchTimer(launchTimer - 1);
+      } else if (launchTimer === 0 && travelTimer !== 0) {
+        setLaunchTimer('Done');
+        setTravelTimer(travelTime);
+      } else if (launchTimer === 'Done' && typeof travelTimer == 'number' && travelTimer > 0) {
+        setTravelTimer(travelTimer - 1);
+      } else {
+        setTravelTimer('Done');
+        const launchedOn = new Date().toLocaleDateString();
+        dispatch(addMissionToHistory({id, title, agencies, type, flight, launchedOn}));
+        dispatch(removeLaunchMission(id));
+      }
+    }, 1000);
     
     return () => {
-      clearInterval(launchInterval);
+      clearInterval(launchAndTravelInterval);
     };
-  }, [launchTimer]); // Only re-run the effect if count changes
+    // Only re-run the effect if any of below dependencies changes
+  }, [launchTimer, travelTimer, travelTime, dispatch, id, title, agencies, type, flight]); 
 
-  return (
-    <span className={'badge rounded-pill bg-danger fw-bold fs-5'}> {launchTimer} </span>
-  )
-}
+  /**
+   * Handles the last minute Go or No-GO.
+   * @param {*} event 
+   */
+  const handleCallOff = event => {
+    event.preventDefault();
+    dispatch(addMissionToPrep({id, title, agencies, type, flight, launchSchedule, travelTime}));
+    dispatch(removeLaunchMission(id));
+  };
 
-
-const LaunchMission = ({id, title, agencies, type, flight, prepTime, launchSchedule}) => {
-
-  console.log('Render -- Launch mission - ' + id);
+  /**
+   * Handles the self destruct
+   * @param {*} event 
+   */
+  const handleSelfDestruct = event => {
+    event.preventDefault();
+    dispatch(removeLaunchMission(id));
+  };
 
   return (    
       <div className="card border-success bg-dark p-3 p-md-3 border rounded-3 bg-light" style={{ 'width': '25rem'}}>
@@ -40,12 +71,35 @@ const LaunchMission = ({id, title, agencies, type, flight, prepTime, launchSched
 
             <dd className="col-3">Prepare:</dd>
             <dt className="col-9">{prepTime}</dt>
+
+            <dd className="col-3">Launch:</dd>
+            <dt className="col-9">
+              <span className={'badge rounded-pill bg-success fw-bold fs-5'}> {launchTimer} </span>
+            </dt>
+
+            <dd className="col-3">Travel:</dd>
+            <dt className="col-9">
+              <span className={'badge rounded-pill bg-primary fw-bold fs-5'}> {travelTimer} </span>
+            </dt>
           </dl>
         </div>
         <div className="card-footer border-secondary">
           <div className="d-flex justify-content-between align-items-center">
-            <button type="button" className="btn btn-danger btn-md px-4">Stop</button>
-            <LaunchTimmer launchSchedule={launchSchedule} />
+            <button 
+              type="button" 
+              className="btn btn-warning btn-md px-4"
+              onClick={handleCallOff}
+            >
+              Call Off
+            </button>
+            
+            <button 
+              type="button" 
+              className="btn btn-danger btn-md px-4"
+              onClick={handleSelfDestruct}
+            >
+              Self Destruct
+            </button>
           </div>
         </div>
       </div>

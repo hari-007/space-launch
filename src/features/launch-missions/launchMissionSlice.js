@@ -10,11 +10,14 @@ export const launchMissionsSlice = createSlice({
         // from the dispatch of createMission event
         scheduleMission: (state, action) => {
             state.push({ ...action.payload })
+        },
+        removeLaunchMission: (state, action) => {
+            return [...state.filter(eachMission => eachMission.id !== action.payload)];
         }
     }
 });
 
-export const { scheduleMission } = launchMissionsSlice.actions;
+export const { scheduleMission, removeLaunchMission } = launchMissionsSlice.actions;
 
 export const fetchLaunchMissionList = (state) => state.launchMissions;
 
