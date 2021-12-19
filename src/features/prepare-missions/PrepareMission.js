@@ -12,8 +12,6 @@ const PrepareMission = ({id, title, agencies, type, flight}) => {
   const [prepTime, setPrepTime] = useState('');
   const [launchSchedule, setLaunchSchedule] = useState('');
   const [travelTime, setTravelTime] = useState('');
-  
-  console.log('Render -- PrepareMission - ' + title);
 
   const handleEditMission = event => {
     event.preventDefault();

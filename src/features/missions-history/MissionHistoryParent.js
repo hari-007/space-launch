@@ -4,9 +4,7 @@ import { fetchMissionHistory } from './MissionHistorySlice';
 import { MissionHistory } from './MissionHistory';
 
 export function MissionHistoryParent() {
-
-  console.log('Render -- MissionHistoryParent');
-
+  
   const missionHistoryData = useSelector(fetchMissionHistory);
   let preparedMissionsListComponents;
 
@@ -32,7 +30,7 @@ export function MissionHistoryParent() {
           <h1 className="display-5 fw-bold lh-1 text-white">Missions History</h1>
           <div className="col-lg-11 mx-auto">
             <p className="fs-5 mb-4 text-dark">All the launched missions info will appear here.</p>
-            <div className="d-grid gap-2 d-lg-flex gy-3 overflow-scroll">
+            <div className="d-grid gap-2 d-lg-flex gy-3 overflow-scroll text-white">
               {preparedMissionsListComponents}
             </div>
           </div>

@@ -1,7 +1,43 @@
 # space-launch
 
+## description:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/, [Redux Toolkit](https://redux-toolkit.js.org/) and [Bootstrap styles](https://getbootstrap.com/) template.
+- The functionality of this project/app is to ***manage the space missions***.
+- It has multiple stages and each stage having a step of mission state. Those are **Create Mission**, **Prepare Mission**, **Launch Mission**, and **Mission History**.
+
+## Function:
+
+In this section we will go through every step of functionality:
+
+### Create Mission:
+- Here we on-board a mission with initial design and plan.
+- Create Mission form submission will indicate that mission is ready for preparation/assembly state.
+
+![Create Mission](public/images/create-mission.png "Create Mission")
+
+
+### Prepare Mission:
+- Here we provide the time for preparation, launch schedule time, and travel time. 
+- The next / **Done** state of this mission prepare will be launch mission and the previous stage is to send the mission back to create mission section for **edit**
+
+
+![Prepare Mission](public/images/prepare-missions.png "Prepare Mission")
+
+
+### Launch Mission:
+- Here we will just observe the mission launch.
+- We can do the last minute **call-off** and send the mission back to prepare-mission state of we can do the **self destruct** to remove this mission from launch observation list
+- If neither call-off nor self-destruct has used then mission will go to mission history state aftereverything completes.
+
+![Launch Mission](public/images/launch-missions.png "Launcg Mission")
+
+
+### Mission History:
+- This is the final stage of mission launch management. So all the completed launched missions will be placed here as **mission history**.
+- It contains very all the information of the missions launched.
+
+![Mission History](public/images/missions-history.png "Mission History")
 
 ## Available Scripts
 

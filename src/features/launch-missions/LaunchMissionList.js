@@ -5,8 +5,6 @@ import LaunchMission from './LaunchMission';
 
 export function LaunchMissionList() {
 
-  console.log('Render -- LaunchMissionList');
-
   const launchMissionsListData = useSelector(fetchLaunchMissionList);
   let launchMissionListComponents;
 
